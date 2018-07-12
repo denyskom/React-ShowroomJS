@@ -21,7 +21,20 @@ class PersonList extends Component {
     };
 
 
+
+
+
     render() {
+        let employeeList = (
+            <tbody id="tableBody">
+            {this.state.employees.map(employee => {
+                return <Person name={employee.name}
+                        id={employee.id}
+                        post={employee.post}
+                        salary={employee.salary}/>
+            })}
+            </tbody>);
+
         return(
             <div>
                 <table className="table border table-striped mt-4" id="tableHead">
@@ -34,21 +47,13 @@ class PersonList extends Component {
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
-                    <tbody id="tableBody">
-                    <Person name={this.state.employees[this.state.index].name}
-                        id={this.state.employees[this.state.index].id}
-                        post={this.state.employees[this.state.index].post}
-                            salary={this.state.employees[this.state.index].salary}/>
-                        </tbody>
-                        </table>
-                        <button onClick={this.randomEmployee} type="button" className="btn btn-outline-primary btn-lg btn-block"
+                    {employeeList}
+                    </table>
+                <button onClick={this.randomEmployee} type="button" className="btn btn-outline-primary btn-lg btn-block"
                                 id="hireButton">Other</button>
             </div>
         );
     }
 }
-
-
-
 
 export default PersonList;
