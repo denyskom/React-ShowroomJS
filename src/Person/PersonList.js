@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Person from './Person';
+import {Link} from 'react-router-dom'
 
 class PersonList extends Component {
 
@@ -48,7 +49,7 @@ class PersonList extends Component {
                     {employeeList}
                     </table>
                 <div className="container w-25">
-                    <a type="submit" href="/hire" className="btn-link btn btn-outline-primary btn-block">Hire</a>
+                    <Link role="button" to="/hire" className="btn btn-outline-primary btn-block">Hire</Link>
                 </div>
             </div>
         );

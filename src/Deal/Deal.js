@@ -9,7 +9,7 @@ const deal = (props) => {
                 <h4 className="card-title text-left" id="dealId">Deal ID: {props.id} </h4>
                 <div className="card text-left">
                     <div className="card-body">
-                        <h5 className="card-title">Test: {props.title}</h5>
+                        <h5 className="card-title">{props.title}</h5>
                         <p className="deal-description card-text">{props.description}</p>
                     </div>
                 </div>
