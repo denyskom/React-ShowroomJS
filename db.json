@@ -1,0 +1,81 @@
+{
+  "salary_type": [
+    {
+      "id": 1,
+      "name": "Fixed"
+    },
+    {
+      "id": 2,
+      "name": "Percentage"
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "full_name": "Sebastian Bach",
+      "post": "Manager",
+      "salary_type": 2,
+      "salary": "%"
+    },
+    {
+      "id": 2,
+      "full_name": "Stevie Wonder",
+      "post": "Manager",
+      "salary_type": 2,
+      "salary": "%"
+    },
+    {
+      "id": 3,
+      "full_name": "Anna Kournikova",
+      "post": "Bookkeeper",
+      "salary_type": 1,
+      "salary": "5000"
+    }
+  ],
+  "deals": [
+    {
+      "id": 1,
+      "sellerId": 1,
+      "productId": 3,
+      "price": 15000
+    },
+    {
+      "id": 2,
+      "sellerId": 2,
+      "productId": 4,
+      "price": 20000
+    },
+    {
+      "id": 3,
+      "sellerId": 2,
+      "productId": 2,
+      "price": 25000
+    }
+  ],
+  "assortment": [
+    {
+      "id": 1,
+      "brand": "BMW",
+      "description": "Designed For Driving Pleasure",
+      "price": 15000
+    },
+    {
+      "id": 2,
+      "brand": "Audi",
+      "description": "Truth in Engineering",
+      "price": 20000
+    },
+    {
+      "id": 3,
+      "brand": "Lexus",
+      "description": "The Relentless Pursuit of Perfection",
+      "price": 25000
+    },
+    {
+      "id": 4,
+      "brand": "Ford",
+      "description": "Everything We Do Is Driven By You",
+      "price": 10000
+    }
+  ]
+}

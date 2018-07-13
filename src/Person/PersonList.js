@@ -10,28 +10,26 @@ class PersonList extends Component {
             {id:2,name: "Harry", post: "Stranger", salary: "1000" },
             {id:3,name: "Tom", post: "Lord", salary: "10000" }
     ],
-        index: 0,
-
 };
 
-    randomEmployee = () => {
-        let num = Math.random() * 2;
-        num = Math.round(num);
-        this.setState({index: num});
+    removeEmployee = (index) => {
+      const employees = this.state.employees.slice();
+      employees.splice(index, 1);
+      this.setState({employees: employees});
     };
-
-
-
 
 
     render() {
         let employeeList = (
             <tbody id="tableBody">
-            {this.state.employees.map(employee => {
+            {this.state.employees.map((employee, index) => {
                 return <Person name={employee.name}
+                               key={employee.id}
                         id={employee.id}
                         post={employee.post}
-                        salary={employee.salary}/>
+                        salary={employee.salary}
+                deleteHandler={() => this.removeEmployee(index)}
+                               editNameHanler={(event) => this.editName(event,employee.id)}/>
             })}
             </tbody>);
 
@@ -49,8 +47,9 @@ class PersonList extends Component {
                     </thead>
                     {employeeList}
                     </table>
-                <button onClick={this.randomEmployee} type="button" className="btn btn-outline-primary btn-lg btn-block"
-                                id="hireButton">Other</button>
+                <div className="container w-25">
+                    <a type="submit" href="/hire" className="btn-link btn btn-outline-primary btn-block">Hire</a>
+                </div>
             </div>
         );
     }

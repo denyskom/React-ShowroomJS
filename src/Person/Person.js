@@ -9,7 +9,7 @@ const person = (props) => {
             <td id="thPost">{props.post}</td>
             <td id="thSalary">{props.salary}</td>
             <td>
-                <div className="btn-group-toggle" data-toggle="buttons">
+                <div class="btn-group-toggle" data-toggle="buttons">
                     <button onClick={props.editHandler} className="edit btn btn-outline-primary ml-1 mt-1" type="submit">Edit</button>
                     <button onClick={props.deleteHandler} className="delete btn btn-outline-dark ml-1 mt-1" type="submit">Delete</button>
                 </div>
