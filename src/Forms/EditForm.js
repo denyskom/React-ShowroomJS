@@ -1,28 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './EmployeeForm.css';
 import axios from "axios";
 import EmployeeForm from "./EmployeeForm";
 
-const EditForm = ({ match }) => {
+class EditForm extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            id:this.props.match.params.id,
+            employee:{}
+        }
+    }
 
-    let employee;
-    let isLoaded = false;
-    axios.get(`http://localhost:3004/employees/${match.params.id}`).then(response => {
-        employee = response.data;
-        isLoaded = true;
-    });
-    return(
-        <EmployeeForm id={match.params.id}
-            // name={employee.full_name}
-            // post={employee.post}
-            // salary={employee.salary}
-        />
-    );
-
-
-
-
+    componentDidMount() {
+        axios.get(`http://localhost:3004/employees/${this.state.id}`)
+            .then(response => this.setState({employee:response.data}))
+    }
+    render() {
+        return(
+            <EmployeeForm id={this.state.id}
+                name={this.state.employee.full_name}
+                post={this.state.employee.post}
+                salary={this.state.employee.salary}
+            />
+        );
+    }
 
 };
 

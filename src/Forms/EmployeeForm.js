@@ -10,7 +10,6 @@ const employeeURL = "http://localhost:3004/employees";
 class EmployeeForm extends Component{
     constructor (props) {
         super(props);
-        console.log(props.id?"here":"hello");
         this.state = {
             id:props.id?props.id:0,
             salaryTypes:[],
