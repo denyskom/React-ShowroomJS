@@ -4,20 +4,22 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './EmployeeForm.css';
 import axios from "axios";
 const salaryTypeURL = "http://localhost:3004/salary_type";
-const employeeURL = " http://localhost:3004/employees";
+const employeeURL = "http://localhost:3004/employees";
 
 
 class EmployeeForm extends Component{
     constructor (props) {
         super(props);
+        console.log(props.id?"here":"hello");
         this.state = {
+            id:props.id?props.id:0,
             salaryTypes:[],
             inValidNameError: "*Invalid name",
             inValidSalaryError: "*Salary should contain numbers or % sign",
             inValidPostError: "*Invalid post",
-            inputName: "",
-            inputPost: "",
-            inputSalary: "",
+            inputName: props.name?props.name:"",
+            inputPost: props.post?props.post:"",
+            inputSalary: props.post?props.post:"",
             inputSalaryType:"",
             inputPostValid: false,
             inputSalaryValid: false,

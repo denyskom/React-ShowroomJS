@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import {Link, Redirect} from 'react-router-dom'
 
 const person = (props) => {
     return (
@@ -9,9 +10,9 @@ const person = (props) => {
             <td id="thPost">{props.employee.post}</td>
             <td id="thSalary">{props.employee.salary}</td>
             <td>
-                <div className="btn-group-toggle" data-toggle="buttons">
-                    <a role="button" href="/hire"  className="btn btn-outline-primary ml-1 mt-1"
-                            value={props.id}>Edit</a>
+                <div className="btn-group-toggle">
+                    <a href={`/edit/${props.employee.id}`}
+                          className="btn btn-outline-primary ml-1 mt-1">Edit</a>
                     <button onClick={props.deleteHandler}
                             className="delete btn btn-outline-dark ml-1 mt-1" type="submit">Delete</button>
                 </div>

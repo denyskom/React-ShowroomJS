@@ -6,6 +6,7 @@ import Products from "../Product/Products";
 import PersonList from "../Person/PersonList";
 import {Route} from 'react-router-dom';
 import Head from "./Head";
+import EditForm from "../Forms/EditForm";
 
 
 const main = (props) => {
@@ -17,7 +18,7 @@ const main = (props) => {
                 <Route path="/deal" exact component={Deals}/>
                 <Route path="/employee" exact component={PersonList}/>
                 <Route path="/hire" exact component={EmployeeForm}/>
-                <Route path="/edit" exact component={EmployeeForm}/>
+                <Route path="/edit/:id" component={EditForm}/>
             </main>
         </div>
 
