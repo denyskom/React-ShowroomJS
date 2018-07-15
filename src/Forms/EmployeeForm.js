@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './EmployeeForm.css';
 import axios from "axios";
 const salaryTypeURL = "http://localhost:3004/salary_type";
+const employeeURL = " http://localhost:3004/employees";
 
 
 class EmployeeForm extends Component{
@@ -16,10 +18,12 @@ class EmployeeForm extends Component{
             inputName: "",
             inputPost: "",
             inputSalary: "",
+            inputSalaryType:"",
             inputPostValid: false,
             inputSalaryValid: false,
             inputNameValid: false,
-            isButtonDisabled: true
+            isButtonDisabled: true,
+            redirect: false
         };
     }
 
@@ -38,7 +42,6 @@ class EmployeeForm extends Component{
     };
 
     validateInput = (name) => {
-        console.log(this.state[name]);
         if(this.state[name].length >= 2) {
             this.setState({[name +"Valid"]: true},() => this.validateAllFields());
             return;
@@ -57,6 +60,9 @@ class EmployeeForm extends Component{
 
     renderSalaryTypeSelect = ()  => {
         const options = this.state.salaryTypes.map(salaryType => {
+            if(this.state.inputSalaryType ==="") {
+                this.setState({inputSalaryType: salaryType.id})
+            }
             return(<option key={salaryType.id} value={salaryType.id}>{salaryType.name}</option>);
         });
 
@@ -68,8 +74,21 @@ class EmployeeForm extends Component{
         </div>);
     };
 
+    addEmployee = () => {
+        axios.post(employeeURL,
+            {
+            full_name:this.state.inputName,
+            salary:this.state.inputSalary,
+            post:this.state.inputPost,
+            salary_type:Number(this.state.inputSalaryType)
+        }).then(() => this.setState({redirect:true}));
+    };
+
 
     render () {
+        if(this.state.redirect) {
+            return (<Redirect to="/employee"/>);
+        }
 
         return(
             <div className="container mt-4">
@@ -80,29 +99,29 @@ class EmployeeForm extends Component{
                             <label htmlFor="inputName">Full Name:</label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputName" placeholder="Name" required/>
-                                <span hidden ={this.state.inputName ==="" || this.state.inputNameValid}
-                                      className="help-block" >{this.state.inValidNameError}</span>
+                            <span hidden ={this.state.inputName ==="" || this.state.inputNameValid}
+                                  className="help-block" >{this.state.inValidNameError}</span>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="inputPost">Post: </label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputPost" placeholder="Post" required/>
-                                <span hidden ={this.state.inputPost ==="" || this.state.inputPostValid}
-                                    className="help-block" >{this.state.inValidPostError}</span>
+                            <span hidden ={this.state.inputPost ==="" || this.state.inputPostValid}
+                                  className="help-block" >{this.state.inValidPostError}</span>
                         </div>
 
                         <div className="form-group col-md-6">
                             <label htmlFor="inputSalary">Salary</label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputSalary" placeholder="Salary" required/>
-                                <span hidden ={this.state.inputSalary ==="" || this.state.inputSalaryValid}
-                                    className="help-block">{this.state.inValidSalaryError}</span>
+                            <span hidden ={this.state.inputSalary ==="" || this.state.inputSalaryValid}
+                                  className="help-block">{this.state.inValidSalaryError}</span>
                         </div>
                         {this.renderSalaryTypeSelect()}
                     </div>
                     <div className="container w-25">
                         <button type="button" className="btn btn-outline-primary btn-block"
-                                id="addButton" disabled={this.state.isButtonDisabled}>Hire</button>
+                                onClick={this.addEmployee} disabled={this.state.isButtonDisabled}>Hire</button>
                     </div>
 
                 </form>

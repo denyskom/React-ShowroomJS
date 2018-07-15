@@ -14,7 +14,7 @@ class PersonList extends Component {
             {id:3,full_name: "Tom", post: "Lord", salary: "10000" }
     ],
 };
-    
+
     componentDidMount(){
         axios.get(employeeURL)
             .then(response => {this.setState({employees: response.data});}
