@@ -27,19 +27,22 @@ class PersonList extends Component {
             )
     }
 
-
-
-    render() {
-        let employeeList = (
-            <tbody id="tableBody">
-            {this.state.employees.map((employee, index) => {
-                return <Person
-                    employee={employee}
-                    key={employee.id}
+    renderEmployeeTable = () => {
+        const employeeTable = this.state.employees.map((employee, index) => {
+            return <Person
+                employee={employee}
+                key={employee.id}
                 deleteHandler={() => this.removeEmployee(index)}/>
-            })}
+        });
+
+        return (
+            <tbody id="tableBody">
+            {employeeTable}
             </tbody>);
 
+    };
+
+    render() {
         return(
             <div>
                 <table className="table border table-striped mt-4" id="tableHead">
@@ -52,7 +55,7 @@ class PersonList extends Component {
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
-                    {employeeList}
+                    {this.renderEmployeeTable()}
                     </table>
                 <div className="container w-25">
                     <Link role="button" to="/hire" className="btn btn-outline-primary btn-block">Hire</Link>
