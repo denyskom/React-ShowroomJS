@@ -23,6 +23,7 @@ class EmployeeForm extends Component{
             inputSalaryValid: false,
             inputNameValid: false,
             isButtonDisabled: true,
+            isManager: false,
             redirect: false
         };
     }
@@ -42,7 +43,7 @@ class EmployeeForm extends Component{
     };
 
     validateInput = (name) => {
-        if(this.state[name].length >= 2) {
+        if(this.state[name].length >= 2 || this.state[name]==="%") {
             this.setState({[name +"Valid"]: true},() => this.validateAllFields());
             return;
         }
@@ -58,17 +59,43 @@ class EmployeeForm extends Component{
         }
     };
 
+    onInputHandler = (event) => {
+        const salaryType = Number(event.target.value);
+        if(salaryType === 2) {
+            this.setState({
+                inputPost: "Manager",
+                inputSalary: "%",
+                inputSalaryType: salaryType,
+                isManager:true
+
+            }, () => {
+                this.validateInput("inputPost");
+                this.validateInput("inputSalary");
+                this.validateAllFields()
+            });
+            return;
+        }
+
+        this.setState({
+            inputPost: "",
+            inputSalary: "",
+            inputSalaryType: salaryType,
+            isManager: false});
+    };
+
     renderSalaryTypeSelect = ()  => {
         const options = this.state.salaryTypes.map(salaryType => {
             if(this.state.inputSalaryType ==="") {
-                this.setState({inputSalaryType: salaryType.id})
+                this.setState({inputSalaryType: salaryType.id,
+                    isManager: salaryType.id === "2"
+                })
             }
             return(<option key={salaryType.id} value={salaryType.id}>{salaryType.name}</option>);
         });
 
         return(<div className="form-group col-md-4">
             <label htmlFor="inputSalaryType">Salary Type</label>
-            <select onBlur={this.onChangeHandler} name="inputSalaryType" className="form-control">
+            <select onInput={this.onInputHandler} name="inputSalaryType" className="form-control">
                 {options}
             </select>
         </div>);
@@ -97,14 +124,14 @@ class EmployeeForm extends Component{
                     <div className="form-row text-left">
                         <div className="form-group col-md-6">
                             <label htmlFor="inputName">Full Name:</label>
-                            <input type="text" className="form-control"
+                            <input type="text" className="form-control" value={this.state.inputName}
                                    onChange={this.onChangeHandler} name="inputName" placeholder="Name" required/>
                             <span hidden ={this.state.inputName ==="" || this.state.inputNameValid}
                                   className="help-block" >{this.state.inValidNameError}</span>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="inputPost">Post: </label>
-                            <input type="text" className="form-control"
+                            <input type="text" className="form-control" value={this.state.inputPost} disabled={this.state.isManager}
                                    onChange={this.onChangeHandler} name="inputPost" placeholder="Post" required/>
                             <span hidden ={this.state.inputPost ==="" || this.state.inputPostValid}
                                   className="help-block" >{this.state.inValidPostError}</span>
@@ -112,7 +139,7 @@ class EmployeeForm extends Component{
 
                         <div className="form-group col-md-6">
                             <label htmlFor="inputSalary">Salary</label>
-                            <input type="text" className="form-control"
+                            <input type="text" className="form-control" value={this.state.inputSalary} disabled={this.state.isManager}
                                    onChange={this.onChangeHandler} name="inputSalary" placeholder="Salary" required/>
                             <span hidden ={this.state.inputSalary ==="" || this.state.inputSalaryValid}
                                   className="help-block">{this.state.inValidSalaryError}</span>
