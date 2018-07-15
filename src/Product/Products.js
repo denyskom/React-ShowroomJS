@@ -16,10 +16,8 @@ class Products extends Component {
        let products = (
            <div>
                {this.state.products.map(productCard => {
-                   return <ProductCard id={productCard.id}
-                                title={productCard.brand}
-                                description={productCard.description}
-                                price={productCard.price}/>
+                   return <ProductCard key={productCard.id}
+                       product={productCard}/>
                })}
 
            </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import EmployeeForm from "../Forms/EmployeeForm";
 import Deals from "../Deal/Deals";

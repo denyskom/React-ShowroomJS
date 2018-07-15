@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 const person = (props) => {
     return (
         <tr id="tableRow">
-            <th scope="row" id="thId">{props.id}</th>
-            <td><a className="table-link">{props.name}</a></td>
-            <td id="thPost">{props.post}</td>
-            <td id="thSalary">{props.salary}</td>
+            <th scope="row" id="thId">{props.employee.id}</th>
+            <td><a className="table-link">{props.employee.full_name}</a></td>
+            <td id="thPost">{props.employee.post}</td>
+            <td id="thSalary">{props.employee.salary}</td>
             <td>
                 <div className="btn-group-toggle" data-toggle="buttons">
                     <a role="button" href="/hire"  className="btn btn-outline-primary ml-1 mt-1"

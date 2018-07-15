@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Person from './Person';
 import {Link} from 'react-router-dom'
+import axios from "axios"
+const employeeURL = " http://localhost:3004/employees";
 
 class PersonList extends Component {
 
     state = {
         employees: [
-            {id:1,name: "Ron", post: "Manager", salary: "5000" },
-            {id:2,name: "Harry", post: "Stranger", salary: "1000" },
-            {id:3,name: "Tom", post: "Lord", salary: "10000" }
+            {id:1,full_name: "Ron", post: "Manager", salary: "%" },
+            {id:2,full_name: "Harry", post: "Stranger", salary: "1000" },
+            {id:3,full_name: "Tom", post: "Lord", salary: "10000" }
     ],
 };
 
@@ -19,18 +21,22 @@ class PersonList extends Component {
       this.setState({employees: employees});
     };
 
+    componentDidMount(){
+        axios.get(employeeURL)
+            .then(response => {this.setState({employees: response.data});}
+            )
+    }
+
+
 
     render() {
         let employeeList = (
             <tbody id="tableBody">
             {this.state.employees.map((employee, index) => {
-                return <Person name={employee.name}
-                               key={employee.id}
-                        id={employee.id}
-                        post={employee.post}
-                        salary={employee.salary}
-                deleteHandler={() => this.removeEmployee(index)}
-                               editNameHanler={(event) => this.editName(event,employee.id)}/>
+                return <Person
+                    employee={employee}
+                    key={employee.id}
+                deleteHandler={() => this.removeEmployee(index)}/>
             })}
             </tbody>);
 

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Deal from './Deal';
+import axios from "axios/index";
+
+const dealsURL = "http://localhost:3004/deals";
+const employeeURL = "http://localhost:3004/employees";
+const assortmentURL = "http://localhost:3004/assortment";
+
 
 class  Deals extends Component{
     state = {
@@ -11,15 +17,21 @@ class  Deals extends Component{
         ],
     };
 
+    componentDidMount(){
+        axios.get(dealsURL).then(response => {
+
+        })
+
+
+       }
+
+
     render() {
          let deals = (
             <div>
                 {this.state.deals.map(deal => {
-                    return <Deal id = {deal.id}
-                                 description = {deal.description}
-                                 title = {deal.brand}
-                                 manager = {deal.manager}
-                                 price = {deal.price}/>
+                    return <Deal key={deal.id}
+                        deal={deal}/>
                 })
                 }
             </div>
