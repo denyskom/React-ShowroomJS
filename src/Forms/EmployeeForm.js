@@ -8,7 +8,7 @@ class EmployeeForm extends Component{
     constructor (props) {
         super(props);
         this.state = {
-            salaryType:[],
+            salaryTypes:[],
             inValidNameError: "*Invalid name",
             inValidSalaryError: "*Salary should contain numbers or % sign",
             inValidPostError: "*Invalid post",
@@ -20,6 +20,12 @@ class EmployeeForm extends Component{
             inputNameValid: false,
             isButtonDisabled: true
         };
+    }
+
+    componentDidMount(){
+        axios.get(salaryTypeURL)
+            .then(response => {this.setState({salaryTypes: response.data});}
+            )
     }
 
     onChangeHandler = (event) => {
@@ -49,11 +55,21 @@ class EmployeeForm extends Component{
         }
     };
 
+    renderSalaryTypeSelect = ()  => {
+        const options = this.state.salaryTypes.map(salaryType => {
+            return(<option key={salaryType.id} value={salaryType.id}>{salaryType.name}</option>);
+        });
+
+        return(<div className="form-group col-md-4">
+            <label htmlFor="inputSalaryType">Salary Type</label>
+            <select onBlur={this.onChangeHandler} name="inputSalaryType" className="form-control">
+                {options}
+            </select>
+        </div>);
+    };
+
 
     render () {
-        // axios.get(salaryTypeURL)
-
-
 
         return(
             <div className="container mt-4">
@@ -82,13 +98,7 @@ class EmployeeForm extends Component{
                                 <span hidden ={this.state.inputSalary =="" || this.state.inputSalaryValid}
                                     className="help-block">{this.state.inValidSalaryError}</span>
                         </div>
-
-                        <div className="form-group col-md-4">
-                            <label htmlFor="inputSalaryType">Salary Type</label>
-                            <select onBlur={this.onChangeHandler} name="inputSalaryType" className="form-control">
-                                <option className="salaryOption">...</option>
-                            </select>
-                        </div>
+                        {this.renderSalaryTypeSelect()}
                     </div>
                     <div className="container w-25">
                         <button type="button" className="btn btn-outline-primary btn-block"
