@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './EmployeeForm.css';
 import axios from "axios";
 const salaryTypeURL = "http://localhost:3004/salary_type";
 
@@ -24,8 +25,7 @@ class EmployeeForm extends Component{
 
     componentDidMount(){
         axios.get(salaryTypeURL)
-            .then(response => {this.setState({salaryTypes: response.data});}
-            )
+            .then(response => {this.setState({salaryTypes: response.data});});
     }
 
     onChangeHandler = (event) => {
@@ -80,14 +80,14 @@ class EmployeeForm extends Component{
                             <label htmlFor="inputName">Full Name:</label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputName" placeholder="Name" required/>
-                                <span hidden ={this.state.inputName =="" || this.state.inputNameValid}
+                                <span hidden ={this.state.inputName ==="" || this.state.inputNameValid}
                                       className="help-block" >{this.state.inValidNameError}</span>
                         </div>
                         <div className="form-group col-md-4">
                             <label htmlFor="inputPost">Post: </label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputPost" placeholder="Post" required/>
-                                <span hidden ={this.state.inputPost =="" || this.state.inputPostValid}
+                                <span hidden ={this.state.inputPost ==="" || this.state.inputPostValid}
                                     className="help-block" >{this.state.inValidPostError}</span>
                         </div>
 
@@ -95,7 +95,7 @@ class EmployeeForm extends Component{
                             <label htmlFor="inputSalary">Salary</label>
                             <input type="text" className="form-control"
                                    onChange={this.onChangeHandler} name="inputSalary" placeholder="Salary" required/>
-                                <span hidden ={this.state.inputSalary =="" || this.state.inputSalaryValid}
+                                <span hidden ={this.state.inputSalary ==="" || this.state.inputSalaryValid}
                                     className="help-block">{this.state.inValidSalaryError}</span>
                         </div>
                         {this.renderSalaryTypeSelect()}

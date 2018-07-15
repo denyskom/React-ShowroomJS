@@ -18,9 +18,9 @@ class  Deals extends Component{
     };
 
     componentDidMount(){
-        axios.get(dealsURL).then(response => {
-
-        })
+        // axios.get(dealsURL).then(response => {
+        //
+        // })
 
 
        }

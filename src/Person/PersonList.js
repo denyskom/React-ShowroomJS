@@ -14,13 +14,7 @@ class PersonList extends Component {
             {id:3,full_name: "Tom", post: "Lord", salary: "10000" }
     ],
 };
-
-    removeEmployee = (index) => {
-      const employees = this.state.employees.slice();
-      employees.splice(index, 1);
-      this.setState({employees: employees});
-    };
-
+    
     componentDidMount(){
         axios.get(employeeURL)
             .then(response => {this.setState({employees: response.data});}
@@ -28,11 +22,11 @@ class PersonList extends Component {
     }
 
     renderEmployeeTable = () => {
-        const employeeTable = this.state.employees.map((employee, index) => {
+        const employeeTable = this.state.employees.map((employee) => {
             return <Person
                 employee={employee}
                 key={employee.id}
-                deleteHandler={() => this.removeEmployee(index)}/>
+                deleteHandler={() => this.deleteEmployee(employee.id)}/>
         });
 
         return (
@@ -40,6 +34,11 @@ class PersonList extends Component {
             {employeeTable}
             </tbody>);
 
+    };
+
+    deleteEmployee = (id) => {
+        axios.delete(`${employeeURL}/${id}`)
+            .then(() => this.componentDidMount());
     };
 
     render() {
