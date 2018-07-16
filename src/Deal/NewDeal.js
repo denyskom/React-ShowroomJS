@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios"
+import {Redirect} from 'react-router-dom';
 
 const managerSalaryTypeId = 2;
 const managersUrl = `http://localhost:3004/employees?salary_type=${managerSalaryTypeId}`;
@@ -46,25 +47,41 @@ class NewDeal extends Component {
     }
 
     renderManagerSelect = () => {
-        return ( this.state.managers.map(manager => {
-            return(<option value={manager.id}>{manager.full_name}</option>);
-            })
+        return this.state.managers.map(manager => {
+            if(Number(this.state.managerId) === 0) {
+                this.setState({managerId:manager.id});
+            }
 
-        );
+            return(<option key={manager.id} value={manager.id}>{manager.full_name}</option>);
+            }).reverse();
+
     };
 
-    // addDeal = () => {
-    //     axios.post(dealUrl, {
-    //
-    //     })
-    // };
+
+
+    addDealHandler = () => {
+        axios.post(dealUrl, {
+            sellerId:Number(this.state.managerId),
+            productId:this.state.product.id,
+            price:this.state.product.price
+        }).then(this.setState({redirect:true}));
+    };
+
+    onInputHandler = (event) => {
+        this.setState({managerId:event.target.value})
+    };
+
 
     render() {
+        if(this.state.redirect) {
+            return (<Redirect to={"../../deals"}/>);
+        }
+
         if(!this.state.isLoaded) {
             return (<h3>Loading...</h3>);
         }
 
-        return(<div className="container">
+        return(<div className="container mt">
             <form>
                 <div className="card border-0">
                     <div className="card-body">
@@ -74,12 +91,12 @@ class NewDeal extends Component {
                                     <h5 className="card-title">{this.state.product.brand}</h5>
                                     <p className="card-text">{this.state.product.description}</p>
                                 </div>
-                                <p className="text-left md-0"><label htmlFor="managers">Manager: </label></p>
-                                <select id="managers" className="form-control col-md-4">
+                                <p className="text-left mt-4 mb-0"><label htmlFor="managers">Manager: </label></p>
+                                <select onInput={this.onInputHandler} className="form-control col-md-4">
                                     {this.renderManagerSelect()}
                                 </select>
                                 <p className="card-text" id="newDealPrice">Total Price: ${this.state.product.price}</p>
-                                <button type="button" className="btn btn-outline-primary">Add Deal
+                                <button type="button" onClick={this.addDealHandler} className="btn btn-outline-primary">Add Deal
                                 </button>
                             </div>
                         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
+const newDealUrl = "/deals/new";
+
 
 const productCard = (props) => {
     return (
@@ -12,7 +14,8 @@ const productCard = (props) => {
                         <p className="card-text text-left" >{props.product.description}</p>
                         <p className="card-text" id="productPrice">Price: ${props.product.price} </p>
                         <input type="hidden" value={props.product.id} className="productId"/>
-                        <button type="submit" className="btn btn-outline-primary">Create Deal</button>
+                        <a href={`${newDealUrl}/${props.product.id}`}
+                              className="btn btn-outline-primary">Create Deal</a>
                     </div>
                 </div>
             </div>

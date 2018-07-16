@@ -32,6 +32,6 @@ class EditForm extends Component{
         );
     }
 
-};
+}
 
 export default EditForm;
