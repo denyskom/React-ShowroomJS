@@ -5,6 +5,7 @@ import './EmployeeForm.css';
 import axios from "axios";
 const salaryTypeURL = "http://localhost:3004/salary_type";
 const employeeURL = "http://localhost:3004/employees";
+const defaultEmployeeID = 0;
 
 
 class EmployeeForm extends Component{
@@ -12,7 +13,7 @@ class EmployeeForm extends Component{
         super(props);
         this.state = {
             isLoaded:false,
-            id:props.id?Number(props.id):0,
+            id:props.id?Number(props.id):defaultEmployeeID,
             salaryTypes:[],
             inValidNameError: "*Invalid name",
             inValidSalaryError: "*Salary should contain numbers or % sign",
@@ -63,7 +64,8 @@ class EmployeeForm extends Component{
     validateAllFields = () => {
         if(this.state.inputNameValid &&
             this.state.inputPostValid &&
-            this.state.inputSalaryValid) {
+            this.state.inputSalaryValid &&
+            this.state.inputSalaryType !== "") {
             this.setState({isButtonDisabled: false});
         }
     };
@@ -86,25 +88,21 @@ class EmployeeForm extends Component{
         }
 
         this.setState({
-            inputPost: "",
-            inputSalary: "",
+            inputPost: this.state.inputPost,
+            inputSalary: this.state.inputSalary,
             inputSalaryType: salaryType,
-            isManager: false});
+            isManager: false}, () => this.validateAllFields());
     };
 
     renderSalaryTypeSelect = ()  => {
         const options = this.state.salaryTypes.map(salaryType => {
-            if(this.state.inputSalaryType ==="") {
-                this.setState({inputSalaryType: salaryType.id,
-                    isManager: salaryType.id === "2"
-                })
-            }
             return(<option key={salaryType.id} value={salaryType.id}>{salaryType.name}</option>);
         });
 
         return(<div className="form-group col-md-4">
             <label htmlFor="inputSalaryType">Salary Type</label>
             <select onInput={this.onInputHandler} name="inputSalaryType" className="form-control">
+                <option hidden>...</option>
                 {options}
             </select>
         </div>);
@@ -144,7 +142,7 @@ class EmployeeForm extends Component{
             <div className="container mt-4">
                 <form>
                     <h3 className="mb-4 text-left" id="hireTitle">
-                        {this.state.id !== 0?"Change employee info:":"Create new employee:"}</h3>
+                        {this.state.id !== defaultEmployeeID?"Change employee info:":"Create new employee:"}</h3>
                     <div className="form-row text-left">
                         <div className="form-group col-md-6">
                             <label htmlFor="inputName">Full Name:</label>
@@ -172,9 +170,9 @@ class EmployeeForm extends Component{
                     </div>
                     <div className="container w-25">
                         <button type="button" className="btn btn-outline-primary btn-block"
-                                onClick={this.state.id !== 0?this.editEmployee:this.addEmployee}
+                                onClick={this.state.id !== defaultEmployeeID?this.editEmployee:this.addEmployee}
                                     disabled={this.state.isButtonDisabled}>
-                            {this.state.id !== 0?"Edit":"Hire"}</button>
+                            {this.state.id !== defaultEmployeeID?"Edit":"Hire"}</button>
                     </div>
 
                 </form>
