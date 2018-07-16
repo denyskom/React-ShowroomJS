@@ -1,11 +1,18 @@
 import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
+const dealsUrl = "/deals";
+const managerSalaryType = 2;
+
+
 const person = (props) => {
     return (
         <tr id="tableRow">
             <th scope="row" id="thId">{props.employee.id}</th>
-            <td><a className="table-link">{props.employee.full_name}</a></td>
+            <td><a href={props.employee.salary_type === managerSalaryType?`${dealsUrl}/${props.employee.id}`:""}
+                      className="table-link">
+                {props.employee.full_name}
+                </a></td>
             <td id="thPost">{props.employee.post}</td>
             <td id="thSalary">{props.employee.salary}</td>
             <td>

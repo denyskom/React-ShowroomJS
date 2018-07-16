@@ -14,7 +14,7 @@ const deal = (props) => {
                     </div>
                 </div>
                 <p className="card-text" id="dealManager">Manager: {props.deal.manager}</p>
-                <p className="card-text" id="dealPrice">Total Price: {props.deal.price}</p>
+                <p className="card-text" id="dealPrice">Total Price: ${props.deal.price}</p>
             </div>
         </div>
     )
