@@ -13,11 +13,12 @@ class PersonList extends Component {
             {id:2,full_name: "Harry", post: "Stranger", salary: "1000" },
             {id:3,full_name: "Tom", post: "Lord", salary: "10000" }
     ],
+        isLoaded: false
 };
 
     componentDidMount(){
         axios.get(employeeURL)
-            .then(response => {this.setState({employees: response.data});}
+            .then(response => {this.setState({employees: response.data,isLoaded:true});}
             )
     }
 
@@ -42,6 +43,10 @@ class PersonList extends Component {
     };
 
     render() {
+        if(!this.state.isLoaded) {
+            return (<h3>Loading...</h3>);
+        }
+
         return(
             <div>
                 <table className="table border table-striped mt-4" id="tableHead">

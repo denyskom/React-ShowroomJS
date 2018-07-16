@@ -11,7 +11,8 @@ class EmployeeForm extends Component{
     constructor (props) {
         super(props);
         this.state = {
-            id:props.id?props.id:0,
+            isLoaded:false,
+            id:props.id?Number(props.id):0,
             salaryTypes:[],
             inValidNameError: "*Invalid name",
             inValidSalaryError: "*Salary should contain numbers or % sign",
@@ -27,11 +28,18 @@ class EmployeeForm extends Component{
             isManager: false,
             redirect: false
         };
+
     }
 
     componentDidMount(){
+        if(Number(this.state.id) !== 0) {
+            this.validateInput("inputPost");
+            this.validateInput("inputSalary");
+            this.validateInput("inputName");
+        }
+
         axios.get(salaryTypeURL)
-            .then(response => {this.setState({salaryTypes: response.data});});
+            .then(response => {this.setState({salaryTypes: response.data, isLoaded:true});});
     }
 
     onChangeHandler = (event) => {
@@ -112,16 +120,25 @@ class EmployeeForm extends Component{
         }).then(() => this.setState({redirect:true}));
     };
 
+    editEmployee = () => {
+
+    };
+
 
     render () {
         if(this.state.redirect) {
             return (<Redirect to="/employee"/>);
         }
 
+        if(!this.state.isLoaded) {
+            return (<h3>Loading...</h3>);
+        }
+
         return(
             <div className="container mt-4">
                 <form>
-                    <h3 className="mb-4 text-left" id="hireTitle">Create new employee:</h3>
+                    <h3 className="mb-4 text-left" id="hireTitle">
+                        {this.state.id !== 0?"Change employee info:":"Create new employee:"}</h3>
                     <div className="form-row text-left">
                         <div className="form-group col-md-6">
                             <label htmlFor="inputName">Full Name:</label>
@@ -149,7 +166,8 @@ class EmployeeForm extends Component{
                     </div>
                     <div className="container w-25">
                         <button type="button" className="btn btn-outline-primary btn-block"
-                                onClick={this.addEmployee} disabled={this.state.isButtonDisabled}>Hire</button>
+                                onClick={this.addEmployee} disabled={this.state.isButtonDisabled}>
+                            {this.state.id !== 0?"Edit":"Hire"}</button>
                     </div>
 
                 </form>

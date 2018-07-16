@@ -9,15 +9,20 @@ class EditForm extends Component{
         super(props);
         this.state = {
             id:this.props.match.params.id,
-            employee:{}
+            employee:{},
+            isLoaded:false
         }
     }
 
     componentDidMount() {
         axios.get(`http://localhost:3004/employees/${this.state.id}`)
-            .then(response => this.setState({employee:response.data}))
+            .then(response => this.setState({employee:response.data, isLoaded:true}))
     }
     render() {
+        if(!this.state.isLoaded) {
+            return (<h3>Loading...</h3>);
+        }
+
         return(
             <EmployeeForm id={this.state.id}
                 name={this.state.employee.full_name}
