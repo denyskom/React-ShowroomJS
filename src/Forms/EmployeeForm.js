@@ -19,7 +19,7 @@ class EmployeeForm extends Component{
             inValidPostError: "*Invalid post",
             inputName: props.name?props.name:"",
             inputPost: props.post?props.post:"",
-            inputSalary: props.post?props.post:"",
+            inputSalary: props.salary?props.salary:"",
             inputSalaryType:"",
             inputPostValid: false,
             inputSalaryValid: false,
@@ -121,7 +121,13 @@ class EmployeeForm extends Component{
     };
 
     editEmployee = () => {
-
+        axios.patch(`${employeeURL}/${this.state.id}`,
+            {
+                full_name:this.state.inputName,
+                salary:this.state.inputSalary,
+                post:this.state.inputPost,
+                salary_type:Number(this.state.inputSalaryType)
+            }).then(() => this.setState({redirect:true}));
     };
 
 
@@ -166,7 +172,8 @@ class EmployeeForm extends Component{
                     </div>
                     <div className="container w-25">
                         <button type="button" className="btn btn-outline-primary btn-block"
-                                onClick={this.addEmployee} disabled={this.state.isButtonDisabled}>
+                                onClick={this.state.id !== 0?this.editEmployee:this.addEmployee}
+                                    disabled={this.state.isButtonDisabled}>
                             {this.state.id !== 0?"Edit":"Hire"}</button>
                     </div>
 
