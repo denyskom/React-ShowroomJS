@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import ProductCard from './ProductCard';
+import axios from "axios";
+
+const assortmentURL = " http://localhost:3004/assortment";
 
 class Products extends Component {
     state = {
-        products: [
-            { id: 1, brand: "BMW", description: "Truth in Engineering", price: 15000},
-            { id: 2, brand: "Audi", description: "Truth in Engineering", price: 20000},
-            { id: 3, brand: "Ford", description: "Truth in Engineering", price: 10000}
-        ]
+        products: [],
+        isLoaded:false
+    };
+
+    componentDidMount() {
+        axios.get(assortmentURL).then(response => this.setState({products: response.data, isLoaded:true}))
     }
+
+    renderProducts = () => {
+        return (
+            <div>
+                {this.state.products.map(productCard => {
+                    return <ProductCard key={productCard.id}
+                                        product={productCard}/>
+                })}
+
+            </div>
+    );
+    };
 
     render() {
 
-       let products = (
-           <div>
-               {this.state.products.map(productCard => {
-                   return <ProductCard key={productCard.id}
-                       product={productCard}/>
-               })}
+        if(!this.state.isLoaded) {
+            return (<h3>Loading...</h3>);
+        }
 
-           </div>
-       );
+       let products = this.renderProducts();
         return (
             <div className="container">
                 <div className="deal-card card border-0">

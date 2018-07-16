@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './EmployeeForm.css';
 import axios from "axios";
+
 const salaryTypeURL = "http://localhost:3004/salary_type";
 const employeeURL = "http://localhost:3004/employees";
 const defaultEmployeeID = 0;

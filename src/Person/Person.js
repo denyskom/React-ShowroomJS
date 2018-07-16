@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import {Link, Redirect} from 'react-router-dom'
 
 const person = (props) => {
     return (
