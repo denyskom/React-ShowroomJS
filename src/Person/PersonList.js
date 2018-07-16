@@ -9,11 +9,7 @@ const employeeURL = " http://localhost:3004/employees";
 class PersonList extends Component {
 
     state = {
-        employees: [
-            {id:1,full_name: "Ron", post: "Manager", salary: "%" },
-            {id:2,full_name: "Harry", post: "Stranger", salary: "1000" },
-            {id:3,full_name: "Tom", post: "Lord", salary: "10000" }
-    ],
+        employees: [],
         isLoaded: false
 };
 

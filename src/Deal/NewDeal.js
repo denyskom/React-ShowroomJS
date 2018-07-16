@@ -3,7 +3,8 @@ import axios from "axios"
 
 const managerSalaryTypeId = 2;
 const managersUrl = `http://localhost:3004/employees?salary_type=${managerSalaryTypeId}`;
-const productUrl = "  http://localhost:3004/assortment";
+const productUrl = "http://localhost:3004/assortment";
+const dealUrl = "http://localhost:3004/deals";
 
 
 
@@ -52,6 +53,12 @@ class NewDeal extends Component {
         );
     };
 
+    // addDeal = () => {
+    //     axios.post(dealUrl, {
+    //
+    //     })
+    // };
+
     render() {
         if(!this.state.isLoaded) {
             return (<h3>Loading...</h3>);
@@ -69,7 +76,6 @@ class NewDeal extends Component {
                                 </div>
                                 <p className="text-left md-0"><label htmlFor="managers">Manager: </label></p>
                                 <select id="managers" className="form-control col-md-4">
-                                    <option hidden>...</option>
                                     {this.renderManagerSelect()}
                                 </select>
                                 <p className="card-text" id="newDealPrice">Total Price: ${this.state.product.price}</p>
