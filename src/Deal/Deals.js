@@ -90,10 +90,11 @@ class  Deals extends Component{
 
     render() {
 
-
-
         if(!this.state.isAllLoaded)  {
             return(<h3>Loading...</h3>);
+        }
+        if(this.state.deals.length === 0) {
+            return(<h3>No deals yet</h3>);
         }
         let deals = this.renderDeals();
 
@@ -109,10 +110,5 @@ class  Deals extends Component{
         );
     }
 }
-
-
-
-
-
 
 export default Deals
