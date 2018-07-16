@@ -15,10 +15,12 @@ const main = (props) => {
             <Head/>
             <main className="container">
                 <Route path="/" exact component={Products}/>
-                <Route path="/deal" exact component={Deals}/>
-                <Route path="/employee" exact component={PersonList}/>
+                <Route path="/deals" exact component={Deals}/>
+                <Route path="/deals/:id" exact component={Deals}/>
+                <Route path="/employees" exact component={PersonList}/>
                 <Route path="/hire" exact component={EmployeeForm}/>
                 <Route path="/edit/:id" component={EditForm}/>
+
             </main>
         </div>
 

@@ -17,10 +17,10 @@ class Head extends Component {
                                 className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link "  to="/deal">Deals</Link>
+                            <Link className="nav-link "  to="/deals">Deals</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/employee">Employee</Link>
+                            <Link className="nav-link" to="/employees">Employee</Link>
                         </li>
                     </ul>
                 </div>
