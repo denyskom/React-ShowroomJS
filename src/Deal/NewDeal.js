@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import {Redirect} from 'react-router-dom';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 
 const managerSalaryTypeId = 2;
 const managersUrl = `http://localhost:3004/employees?salary_type=${managerSalaryTypeId}`;
@@ -20,6 +22,7 @@ class NewDeal extends Component {
             managerId:0,
             isProductLoaded: false,
             isLoaded: false,
+            managersOptions:[],
             redirect: false
         };
     }
@@ -32,7 +35,7 @@ class NewDeal extends Component {
 
     loadManagers = () => {
         axios.get(managersUrl).then(response => {
-            this.setState({managers:response.data, isLoaded:true})
+            this.setState({managers:response.data},() => this.renderManagerSelect())
         });
     };
 
@@ -47,13 +50,15 @@ class NewDeal extends Component {
     }
 
     renderManagerSelect = () => {
-        return this.state.managers.map(manager => {
+        let managerId = 0;
+        let options = this.state.managers.map(manager => {
             if(Number(this.state.managerId) === 0) {
-                this.setState({managerId:manager.id});
+                managerId = Number(manager.id);
             }
 
             return(<option key={manager.id} value={manager.id}>{manager.full_name}</option>);
             }).reverse();
+        this.setState({managersOptions:options, managerId:managerId, isLoaded:true});
 
     };
 
@@ -81,6 +86,8 @@ class NewDeal extends Component {
             return (<h3>Loading...</h3>);
         }
 
+        // let managersOptions = this.renderManagerSelect();
+
         return(<div className="container mt">
             <form>
                 <div className="card border-0">
@@ -93,7 +100,7 @@ class NewDeal extends Component {
                                 </div>
                                 <p className="text-left mt-4 mb-0"><label htmlFor="managers">Manager: </label></p>
                                 <select onInput={this.onInputHandler} className="form-control col-md-4">
-                                    {this.renderManagerSelect()}
+                                    {this.state.managersOptions}
                                 </select>
                                 <p className="card-text" id="newDealPrice">Total Price: ${this.state.product.price}</p>
                                 <button type="button" onClick={this.addDealHandler} className="btn btn-outline-primary">Add Deal
