@@ -86,8 +86,6 @@ class NewDeal extends Component {
             return (<h3>Loading...</h3>);
         }
 
-        // let managersOptions = this.renderManagerSelect();
-
         return(<div className="container mt">
             <form>
                 <div className="card border-0">
@@ -103,7 +101,8 @@ class NewDeal extends Component {
                                     {this.state.managersOptions}
                                 </select>
                                 <p className="card-text" id="newDealPrice">Total Price: ${this.state.product.price}</p>
-                                <button type="button" onClick={this.addDealHandler} className="btn btn-outline-primary">Add Deal
+                                <button type="button" onClick={this.addDealHandler}
+                                        className="btn btn-outline-primary">Add Deal
                                 </button>
                             </div>
                         </div>
